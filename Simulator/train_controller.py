@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+
+def report_train_sensors(sensor_list):
+    report = [0 for i in range(10)]
+    for sensor in sensor_list:
+        mod = sensor / 16;
+        direction = sensor % 16 / 8;
+        reminder = sensor % 8;
+        report[mod*2+direction] += pow(2, 7 - reminder)
+    report = ''.join([chr(i) for i in report])
+    return report
+
+if __name__ == '__main__':
+    input = open('train_out', 'r')
+    output = open('train_in', 'w')
+    while True:
+        cmd = ord(input.read(1))
+        if cmd == 133:
+            #report train sensors
+            print [hex(ord(ch)) for ch in report_train_sensors([2,3,79])]
+            output.write(report_train_sensors([2,3,79]))
+            output.flush()
